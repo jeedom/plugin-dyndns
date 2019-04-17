@@ -28,7 +28,7 @@ Voilà à quoi ressemble la page du plugin Dyndns (ici avec déjà 1
 > permet de faire apparaître un menu d’accès rapide (vous pouvez, à
 > partir de votre profil, le laisser toujours visible).
 
-Une fois que vous cliquez sur l’un d’eux, vous obtenez :
+Once you click on one of them, you get:
 
 ![dyndns4](../images/dyndns4.PNG)
 
@@ -57,13 +57,13 @@ You can find here the full configuration of your device :
 
 -   **Token** : token utilisé pour duckdns
 
-En-dessous vous retrouvez la liste des commandes :
+Below you will find the list of commands:
 
 -   **Nom** : le nom affiché sur le dashboard,
 
 -   **Afficher** : permet d’afficher la donnée sur le dashboard,
 
--   **Tester** : permet de tester la commande
+-   **Test**: allows to test the command
 
 > **Note**
 >
