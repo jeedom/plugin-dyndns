@@ -19,6 +19,7 @@
         "Visible": "Görülebilir",
         "Service": "",
         "Hostname": "",
+        "Domainname": "",
         "Nom d'utilisateur": "Kullanıcı adı",
         "Mot de passe": "Şifre",
         "Token": "",
@@ -39,5 +40,8 @@
         "Erreur de mise à jour de ovh.com : ": "",
         "Erreur de mise à jour de duckdns : ' . $url": "",
         "Erreur de mise à jour de strato.com : ": ""
+    },
+    "info.json": {
+        "Plugin pour mettre à jour dynamiquement des DNS": ""
     }
 }

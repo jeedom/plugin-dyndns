@@ -41,7 +41,7 @@ class dyndns extends eqLogic {
 
 	public static function cron15($_eqLogic_id = null, $_force = false) {
 		if ($_eqLogic_id == null) {
-			$eqLogics = self::byType('dyndns');
+			$eqLogics = self::byType('dyndns',true);
 		} else {
 			$eqLogics = array(self::byId($_eqLogic_id));
 		}
@@ -105,7 +105,7 @@ class dyndns extends eqLogic {
 				}
 				break;
 			case 'noipcom':
-				$url = 'https://' . '@dynupdate.no-ip.com/nic/update?hostname=' . $this->getConfiguration('hostname') . '&myip=' . $ip;
+				$url = 'https://dynupdate.no-ip.com/nic/update?hostname=' . $this->getConfiguration('hostname') . '&myip=' . $ip;
 				$request_http = new com_http($url,$this->getConfiguration('username'),$this->getConfiguration('password'));           	
 				$request_http->setUserAgent('Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.12) Gecko/20070508 Firefox/1.5.0.12');
 				$result = $request_http->exec();
@@ -140,6 +140,19 @@ class dyndns extends eqLogic {
       				throw new Exception(__('Erreur de mise à jour de strato.com : ', __FILE__) . $result);
       			}
       			break;
+      		case 'gandinet':
+				$url = 'https://dns.api.gandi.net/api/v5/domains/' . $this->getConfiguration('domainname') . '/records/' . $this->getConfiguration('hostname') .'/A';
+				$payload = array('rrset_type'=>'A','rrset_ttl'=>'3600','rrset_name'=>$this->getConfiguration('hostname'),'rrset_values'=>array($ip));
+				$payload_json = json_encode($payload);
+				$request_http = new com_http($url);
+				$request_http->setUserAgent('Jeedom dyndns plugin');
+				$request_http->setHeader(array('Content-Type: application/json', 'Content-Length: ' . strlen($payload_json), 'X-API-Key:' . $this->getConfiguration('token')));
+				$request_http->setPut($payload_json);
+				$result = $request_http->exec();
+				if (strpos($result, 'error') !== false) {
+					throw new Exception(__('Erreur de mise à jour de gandinet : ' . $url, __FILE__) . $result);
+				}
+				break;
 		}
 	}
 
