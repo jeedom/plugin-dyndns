@@ -25,18 +25,18 @@ class dyndns extends eqLogic {
 	/*     * ***********************Methode static*************************** */
 
 	public static function getExternalIP() {
-		try {
-			$request_http = new com_http('http://checkip.dyndns.com/');
-			$externalContent = $request_http->exec(8, 1);
-			preg_match('/Current IP Address: \[?([:.0-9a-fA-F]+)\]?/', $externalContent, $m);
-			if (isset($m[1])) {
-				return $m[1];
-			}
-		} catch (Exception $e) {
-
+		$url = config::byKey('service::cloud::url').'/service/myip';
+      		$request_http = new com_http($url);
+      		$request_http->setHeader(array('Content-Type: application/json','Autorization: '.sha512(mb_strtolower(config::byKey('market::username')).':'.config::byKey('market::password'))));
+      		$data = $request_http->exec(30,1);
+		$result = is_json($data, $data);
+		if(isset($result['state']) && $result['state'] != 'ok'){
+		      throw new \Exception(__('Erreur lors de la requete au serveur cloud Jeedom : ',__FILE__).$data);
 		}
-		$request_http = new com_http('http://myip.dnsomatic.com/');
-		return $request_http->exec(8, 1);
+		if(isset($result['data']) && isset($result['data']['ip'])){
+			return $result['data']['ip'];
+		}
+		throw new \Exception(__('impossible de recuperer votre ip externe : ',__FILE__).$data);
 	}
 
 	public static function cron15($_eqLogic_id = null, $_force = false) {

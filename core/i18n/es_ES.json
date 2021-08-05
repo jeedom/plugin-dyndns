@@ -19,6 +19,7 @@
         "Visible": "Visible",
         "Service": "Servicio",
         "Hostname": "Nombre de host",
+        "Domainname": "Nombre de dominio",
         "Nom d'utilisateur": "Nombre de usuario",
         "Mot de passe": "Contraseña",
         "Token": "Simbólico",
@@ -31,6 +32,8 @@
         "Tester": "Probar"
     },
     "plugins\/dyndns\/core\/class\/dyndns.class.php": {
+        "Erreur lors de la requete au serveur cloud Jeedom : ": "Error al solicitar el servidor en la nube de Jeedom:",
+        "impossible de recuperer votre ip externe : ": "imposible recuperar tu ip externa:",
         "Mettre à jour": "Actualización",
         "IP": "IP",
         "Commande externalIP inexistante": "Comando de IP externo inexistente",
@@ -38,7 +41,8 @@
         "Erreur de mise à jour de noip.com : ": "Error de actualización de Noip.com:",
         "Erreur de mise à jour de ovh.com : ": "Error de actualización de Ovh.com:",
         "Erreur de mise à jour de duckdns : ' . $url": "Error al actualizar duckdns: '. $ url",
-        "Erreur de mise à jour de strato.com : ": "Error al actualizar strato.com:"
+        "Erreur de mise à jour de strato.com : ": "Error al actualizar strato.com:",
+        "Erreur de mise à jour de gandinet : ' . $url": "Error al actualizar gandinet: '. $ url"
     },
     "info.json": {
         "Plugin pour mettre à jour dynamiquement des DNS": "Complemento para actualizar dinámicamente DNS"
