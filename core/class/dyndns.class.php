@@ -36,13 +36,13 @@ class dyndns extends eqLogic {
 		}
 		$result = is_json($data, $data);
 		if(isset($result['state']) && $result['state'] != 'ok'){
-		      throw new \Exception(__('Erreur lors de la requete au serveur cloud Jeedom : ',__FILE__).$data);
+		      throw new \Exception(__('Erreur lors de la requête au serveur cloud Jeedom : ',__FILE__).$data);
 		}
 		if(isset($result['data']) && isset($result['data']['ip'])){
 			//log::add('dyndns','debug','getExternalIP  result: ' . $result['data']['ip']);
 			return $result['data']['ip'];
 		}
-		throw new \Exception(__('impossible de recuperer votre ip externe : ',__FILE__).$data);
+		throw new \Exception(__('impossible de récupérer votre IP externe : ',__FILE__).$data);
 	}
 
 	public static function getExternalIP6() {
