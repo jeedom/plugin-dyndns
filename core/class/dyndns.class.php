@@ -28,16 +28,21 @@ class dyndns extends eqLogic {
 		$url = config::byKey('service::cloud::url').'/service/myip';
       		$request_http = new com_http($url);
       		$request_http->setHeader(array('Content-Type: application/json','Autorization: '.sha512(mb_strtolower(config::byKey('market::username')).':'.config::byKey('market::password'))));
-      		$data = $request_http->exec(30,1);
+      		$data = $request_http->exec(30,3);
 		$result = is_json($data, $data);
 		if(isset($result['state']) && $result['state'] != 'ok'){
-		      throw new \Exception(__('Erreur lors de la requete au serveur cloud Jeedom : ',__FILE__).$data);
+		      sleep(3);
+		      $data = $request_http->exec(30,3);
+		}
+		$result = is_json($data, $data);
+		if(isset($result['state']) && $result['state'] != 'ok'){
+		      throw new \Exception(__('Erreur lors de la requête au serveur cloud Jeedom : ',__FILE__).$data);
 		}
 		if(isset($result['data']) && isset($result['data']['ip'])){
 			//log::add('dyndns','debug','getExternalIP  result: ' . $result['data']['ip']);
 			return $result['data']['ip'];
 		}
-		throw new \Exception(__('impossible de recuperer votre ip externe : ',__FILE__).$data);
+		throw new \Exception(__('impossible de récupérer votre IP externe : ',__FILE__).$data);
 	}
 
 	public static function getExternalIP6() {
@@ -53,7 +58,7 @@ class dyndns extends eqLogic {
 
 		}
 		$request_http = new com_http('http://ip1.dynupdate6.no-ip.com/');
-		return $request_http->exec(8, 1);
+		return $request_http->exec(8, 3);
 	}
 
 	public static function cron15($_eqLogic_id = null, $_force = false) {
@@ -62,6 +67,7 @@ class dyndns extends eqLogic {
 		} else {
 			$eqLogics = array(self::byId($_eqLogic_id));
 		}
+		sleep(rand(1, 60));
 		$current_externalIP = self::getExternalIP();
 		foreach ($eqLogics as $eqLogic) {
 			$externalIP = $eqLogic->getCmd(null, 'externalIP');
@@ -78,7 +84,7 @@ class dyndns extends eqLogic {
 				$flagUpdate = 1;
 			}
 
-			if ($eqLogic->getConfiguration("ipv6") > 0){
+			if ($eqLogic->getConfiguration('ipv6') > 0){
 				$current_externalIP6 = self::getExternalIP6();
 				$externalIP6 = $eqLogic->getCmd(null, 'externalIP6');
 				$ipv6 = $externalIP6->execCmd();
