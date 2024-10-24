@@ -70,7 +70,7 @@ class dyndns extends eqLogic {
 		} else {
 			$eqLogics = array(self::byId($_eqLogic_id));
 		}
-		sleep(rand(1, 60));
+		sleep(rand(1, 180));
 		$current_externalIP = self::getExternalIP();
 		foreach ($eqLogics as $eqLogic) {
 			$externalIP = $eqLogic->getCmd(null, 'externalIP');
