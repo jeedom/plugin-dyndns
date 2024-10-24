@@ -44,7 +44,6 @@
         "Supprimer la commande": "Excluir pedido"
     },
     "plugins\/dyndns\/core\/class\/dyndns.class.php": {
-        "Erreur lors de la requête au serveur cloud Jeedom : ": "Erro ao solicitar o servidor nuvem Jeedom:",
         "impossible de récupérer votre IP externe : ": "impossível recuperar seu ip externo:",
         "IP sauvee: ": "IP salvo:",
         ", IP courante: ": ", IP atual:",
