@@ -40,7 +40,7 @@ class dyndns extends eqLogic {
 	  }
 		$result = is_json($data, $data);
 		if(isset($result['state']) && $result['state'] != 'ok'){
-		      return;
+		      return null;
 		}
 		if(isset($result['data']) && isset($result['data']['ip'])){
 			return $result['data']['ip'];
@@ -70,16 +70,20 @@ class dyndns extends eqLogic {
 		} else {
 			$eqLogics = array(self::byId($_eqLogic_id));
 		}
-		sleep(rand(1, 60));
-		$current_externalIP = self::getExternalIP();
+		sleep(rand(1, 180));
+		$current_externalIP = null;
+		$current_externalIP6 = null;
 		foreach ($eqLogics as $eqLogic) {
 			$externalIP = $eqLogic->getCmd(null, 'externalIP');
 			if (!is_object($externalIP)) {
 				continue;
 			}
 			$flagUpdate = 0;
+			if($current_externalIP == null){
+				$current_externalIP = self::getExternalIP();
+			}
 			$ip = $externalIP->execCmd();
-			if ($_force || $ip != $externalIP->formatValue($current_externalIP)) {
+			if ($current_externalIP != null && ($_force || $ip != $externalIP->formatValue($current_externalIP))) {
 				log::add('dyndns','debug', __('IP sauvee: ',__FILE__) .$ip . __(', IP courante: ',__FILE__) . $externalIP->formatValue($current_externalIP) );
 				$externalIP->setCollectDate('');
 				$externalIP->event($current_externalIP);
@@ -88,10 +92,12 @@ class dyndns extends eqLogic {
 			}
 
 			if ($eqLogic->getConfiguration('ipv6') > 0){
-				$current_externalIP6 = self::getExternalIP6();
+				if($current_externalIP6 == null){
+					$current_externalIP6 = self::getExternalIP6();
+				}
 				$externalIP6 = $eqLogic->getCmd(null, 'externalIP6');
 				$ipv6 = $externalIP6->execCmd();
-				if ($_force || $ipv6 != $externalIP6->formatValue($current_externalIP6)) {
+				if (current_externalIP6 !== null && ($_force || $ipv6 != $externalIP6->formatValue($current_externalIP6))) {
 					log::add('dyndns','debug',  __('IPv6 sauvee: ',__FILE__) . $ipv6 .  __(', IPv6 courante: ',__FILE__) . $externalIP6->formatValue($current_externalIP6) );
 					$externalIP6->setCollectDate('');
 					$externalIP6->event($current_externalIP6);
