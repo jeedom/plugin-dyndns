@@ -26,20 +26,23 @@ class dyndns extends eqLogic {
 
 	public static function getExternalIP() {
 		$url = config::byKey('service::cloud::url').'/service/myip';
-      		$request_http = new com_http($url);
-      		$request_http->setHeader(array('Content-Type: application/json','Autorization: '.sha512(mb_strtolower(config::byKey('market::username')).':'.config::byKey('market::password'))));
-      		$data = $request_http->exec(30,3);
+		$request_http = new com_http($url);
+		$request_http->setHeader(array('Content-Type: application/json','Autorization: '.sha512(mb_strtolower(config::byKey('market::username')).':'.config::byKey('market::password'))));
+		$data = $request_http->exec(120,6);
 		$result = is_json($data, $data);
 		if(isset($result['state']) && $result['state'] != 'ok'){
-		      sleep(3);
-		      $data = $request_http->exec(30,3);
+		      sleep(10);
+		      $data = $request_http->exec(120,6);
 		}
+		if(isset($result['state']) && $result['state'] != 'ok'){
+			sleep(30);
+			$data = $request_http->exec(120,6);
+	  }
 		$result = is_json($data, $data);
 		if(isset($result['state']) && $result['state'] != 'ok'){
-		      throw new \Exception(__('Erreur lors de la requête au serveur cloud Jeedom : ',__FILE__).$data);
+		      return;
 		}
 		if(isset($result['data']) && isset($result['data']['ip'])){
-			//log::add('dyndns','debug','getExternalIP  result: ' . $result['data']['ip']);
 			return $result['data']['ip'];
 		}
 		throw new \Exception(__('impossible de récupérer votre IP externe : ',__FILE__).$data);
