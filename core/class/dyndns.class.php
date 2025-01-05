@@ -254,16 +254,35 @@ class dyndns extends eqLogic {
       			}
       			break;
      		case 'gandinet':
-				$url = 'https://dns.api.gandi.net/api/v5/domains/' . $this->getConfiguration('domainname') . '/records/' . $this->getConfiguration('hostname') .'/A';
-				$payload = array('rrset_type'=>'A','rrset_ttl'=>'3600','rrset_name'=>$this->getConfiguration('hostname'),'rrset_values'=>array($ip));
+				$url = 'https://api.gandi.net/v5/livedns/domains/' . $this->getConfiguration('domainname') . '/records/' . $this->getConfiguration('hostname') .'/A';
+				$payload = array(
+					'rrset_type'=>'A',
+					'rrset_ttl'=>'3600',
+					'rrset_name'=>$this->getConfiguration('hostname'),
+					'rrset_values'=>array($ip)
+				);
 				$payload_json = json_encode($payload);
 				$request_http = new com_http($url);
 				$request_http->setUserAgent('Jeedom dyndns plugin');
-				$request_http->setHeader(array('Content-Type: application/json', 'Content-Length: ' . strlen($payload_json), 'X-API-Key:' . $this->getConfiguration('token')));
+				// Manage compatibility with old version of the plugin where the auth-method was apikey by default
+				if  ($this->getConfiguration('auth-method') == ""){
+					$authMethod = "apikey";
+				} else {
+					$authMethod = $this->getConfiguration('auth-method');
+				}
+				if ($authMethod == "apikey"){
+					$request_http->setHeader(array('Content-Type: application/json', 'Content-Length: ' . strlen($payload_json), 'Authorization: Apikey ' . $this->getConfiguration('token')));
+				} 
+				if ($authMethod  == "pat"){	
+					$request_http->setHeader(array('Content-Type: application/json', 'Content-Length: ' . strlen($payload_json), 'Authorization: Bearer ' . $this->getConfiguration('token')));
+				} 
 				$request_http->setPut($payload_json);
 				$result = $request_http->exec();
-				if (strpos($result, 'error') !== false) {
-					throw new Exception(__('Erreur de mise à jour de gandinet : ' . $url, __FILE__) . $result);
+				$status_code = $request_http->getHttpCode(); 
+				if ($status_code !== 200 && $status_code !== 201) {
+					throw new Exception(__('Erreur de mise à jour de gandinet : ' . $url, __FILE__) . ' Response code: ' . $status_code . ' Result: ' . $result);
+				} else {
+					log::add('dyndns', 'debug', 'Gandi.net update success on: ' . $url );
 				}
 				break;
 			case 'infomaniak':

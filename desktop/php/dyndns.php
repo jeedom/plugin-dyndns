@@ -149,6 +149,15 @@ $eqLogics = eqLogic::byType('dyndns');
                                         <input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="password" />
                                     </div>
                                 </div>
+                                <div class="form-group gandinet">
+                                    <label class="col-sm-4 control-label">{{Méthode d'authentification}}</label>
+                                    <div class="col-sm-6">
+                                        <select class="eqLogicAttr" data-l1key="configuration" data-l2key="auth-method">
+                                            <option value="apikey">{{API Key}}</option>
+                                            <option value="pat">{{Personal Access Token (PAT)}}</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group serviceType duckdns gandinet">
                                     <label class="col-sm-4 control-label">{{Token}}</label>
                                     <div class="col-sm-6">
