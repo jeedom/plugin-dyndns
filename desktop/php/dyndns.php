@@ -121,10 +121,11 @@ $eqLogics = eqLogic::byType('dyndns');
                                         <option value="stratocom">www.strato.com</option>
                                         <option value="gandinet">www.gandi.net</option>
                                         <option value="infomaniak">www.infomaniak.com</option>
+                                        <option value="changeip">www.changeip.com</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="serviceType dyndnsorg noipcom ovhcom duckdns stratocom gandinet infomaniak">
+                            <div class="serviceType dyndnsorg noipcom ovhcom duckdns stratocom gandinet infomaniak changeip">
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">{{Hostname}}</label>
                                     <div class="col-sm-6">
@@ -137,13 +138,13 @@ $eqLogics = eqLogic::byType('dyndns');
                                         <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="domainname" />
                                     </div>
                                 </div>
-                                <div class="form-group serviceType dyndnsorg noipcom ovhcom stratocom infomaniak">
+                                <div class="form-group serviceType dyndnsorg noipcom ovhcom stratocom infomaniak changeip">
                                     <label class="col-sm-4 control-label">{{Nom d'utilisateur}}</label>
                                     <div class="col-sm-6">
                                         <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="username" />
                                     </div>
                                 </div>
-                                <div class="form-group serviceType dyndnsorg noipcom ovhcom stratocom infomaniak">
+                                <div class="form-group serviceType dyndnsorg noipcom ovhcom stratocom infomaniak changeip">
                                     <label class="col-sm-4 control-label">{{Mot de passe}}</label>
                                     <div class="col-sm-6">
                                         <input type="password" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="password" />

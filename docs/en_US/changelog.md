@@ -4,6 +4,10 @@
 >
 >As a reminder if there is no information on the update, it means that it only concerns the updating of documentation, translation or text
 
+# 02/04/2025
+
+- changeip.com support
+
 # 10/24/2024
 
 - Optimization of IP recovery
