@@ -97,7 +97,7 @@ class dyndns extends eqLogic {
 				}
 				$externalIP6 = $eqLogic->getCmd(null, 'externalIP6');
 				$ipv6 = $externalIP6->execCmd();
-				if (current_externalIP6 !== null && ($_force || $ipv6 != $externalIP6->formatValue($current_externalIP6))) {
+				if ($current_externalIP6 !== null && ($_force || $ipv6 != $externalIP6->formatValue($current_externalIP6))) {
 					log::add('dyndns','debug',  __('IPv6 sauvee: ',__FILE__) . $ipv6 .  __(', IPv6 courante: ',__FILE__) . $externalIP6->formatValue($current_externalIP6) );
 					$externalIP6->setCollectDate('');
 					$externalIP6->event($current_externalIP6);
