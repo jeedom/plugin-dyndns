@@ -4,6 +4,10 @@
 >
 >Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte
 
+# 04/02/2025
+
+- Support de changeip.com
+
 # 24/10/2024
 
 - Optimisation de la récuperation de l'ip
